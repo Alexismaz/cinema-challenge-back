@@ -37,7 +37,7 @@ async function bootstrap() {
   });
   app.setGlobalPrefix('api');
 
-  const config = new DocumentBuilder().setTitle('SofiaCall API').setDescription('SofiaCall API docuemntation').addBearerAuth().setVersion('1.0').build();
+  const config = new DocumentBuilder().setTitle('Cinema API').setDescription('Cinema API docuemntation').addBearerAuth().setVersion('1.0').build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('doc', app, document);
 

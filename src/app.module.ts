@@ -7,7 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModuleOptions } from './config/options';
 import { ConfigModule } from '@nestjs/config';
-import { UserModule } from '@modules/user/user.module';
+import { BookerService } from '@modules/booker/booker.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -33,7 +33,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         force: true,
       }),
     }),
-    UserModule,
+    BookerService,
     AuthModule,
   ],
   controllers: [AppController],

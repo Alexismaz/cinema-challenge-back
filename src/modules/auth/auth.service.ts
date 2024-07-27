@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService, TokenExpiredError } from '@nestjs/jwt';
-import { UserService } from '../user/user.service';
+import { BookerService } from '../booker/booker.service';
 import * as bcrypt from 'bcrypt';
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -12,13 +12,13 @@ export class AuthService {
   userRepository: any;
 
   constructor(
-    private readonly userService: UserService,
+    private readonly userService: BookerService,
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
   ) {}
 
   async logIn(logInDto: LogInDto) {
-    const user = await this.userService.userExistByEmail(logInDto.email);
+    const user = await this.userService.bookerExistByEmail(logInDto.email);
 
     if (!user) {
       throw new NotFoundException('El usuario no existe.');
@@ -29,8 +29,6 @@ export class AuthService {
     if (!bcrypt.compareSync(logInDto.password, userPassword)) {
       throw new UnauthorizedException('Contraseña no válida.');
     }
-
-    await this.userService.updateLastLogin(user);
 
     const token = await this.generateAccessToken(user.id);
 

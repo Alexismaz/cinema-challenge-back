@@ -1,16 +1,16 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { UserModule } from '../user/user.module';
+import { BookerModule } from '../booker/booker.module';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
-import { User } from '../../models/User.entity';
-import { UserService } from '@modules/user/user.service';
+import { Booker } from '../../models/Booker.entity';
+import { BookerService } from '@modules/booker/booker.service';
 
 @Module({
   imports: [
-    forwardRef(() => UserModule),
+    forwardRef(() => BookerModule),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
@@ -20,9 +20,9 @@ import { UserService } from '@modules/user/user.service';
         },
       }),
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([Booker]),
   ],
-  providers: [UserService, AuthService],
+  providers: [BookerService, AuthService],
   controllers: [AuthController],
   exports: [AuthModule, AuthService],
 })
