@@ -1,13 +1,14 @@
-import { Index, Column, Entity } from 'typeorm';
+import { Index, Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from './Base.entity';
+import { Booking } from './Booking.entity';
 
 export enum UserRoleType {
   ADMIN = 'admin',
-  USER = 'user',
+  USER = 'booker',
 }
 
-@Entity({ name: 'Users' })
-export class User extends BaseEntity {
+@Entity({ name: 'Booker' })
+export class Booker extends BaseEntity {
   @Index({ unique: true })
   @Column({ type: 'varchar', length: 255, nullable: false })
   email: string;
@@ -21,9 +22,6 @@ export class User extends BaseEntity {
   @Column({ type: 'enum', enum: UserRoleType, default: UserRoleType.USER })
   role: UserRoleType;
 
-  @Column({ type: 'timestamp', nullable: true })
-  last_login?: Date;
-
   @Column({ type: 'varchar', length: 255, default: '', nullable: true })
   first_name: string;
 
@@ -32,4 +30,7 @@ export class User extends BaseEntity {
 
   @Column({ type: 'varchar', default: '' })
   phone: string;
+
+  @OneToMany(() => Booking, (booking) => booking.booker)
+  bookings: Booking[];
 }

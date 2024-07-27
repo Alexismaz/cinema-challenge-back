@@ -3,24 +3,24 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { diskStorage } from 'multer';
 import * as uuid from 'uuid';
-import { UserService } from './user.service';
+import { BookerService } from './booker.service';
 import { GetUser } from '@infrastructure/decorators/get-user.decorator';
-import { User } from '@models/User.entity';
+import { Booker } from '@models/Booker.entity';
 import { JwtAuthGuard } from '@modules/auth/guards/jwt-auth.guard';
 
 const allowedFileExtensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
 
-@Controller('user')
-@ApiTags('user')
-export class UserController {
-  constructor(private readonly userService: UserService) {}
+@Controller('booker')
+@ApiTags('booker')
+export class BookerController {
+  constructor(private readonly bookerService: BookerService) {}
 
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Obtiene tu datos de usuario' })
   @ApiBearerAuth()
   @Get('')
-  async getProfile(@GetUser() user: User) {
-    return { ok: true, user };
+  async getProfile(@GetUser() booker: Booker) {
+    return { ok: true, booker };
   }
 
   @UseGuards(JwtAuthGuard)
@@ -48,14 +48,14 @@ export class UserController {
   async uploadFile(
     @UploadedFile()
     file: Express.Multer.File,
-    @GetUser() user: User,
+    @GetUser() booker: Booker,
   ) {
     if (!file) throw new HttpException('a file is required', HttpStatus.BAD_REQUEST);
 
-    const userId = parseInt(`${user.id}`, 10);
+    const bookerId = parseInt(`${booker.id}`, 10);
     const avatar = file.filename;
-    const usersaved = await this.userService.changeAvatar(userId, avatar);
+    const bookersaved = await this.bookerService.changeAvatar(bookerId, avatar);
 
-    return { ok: true, user: usersaved };
+    return { ok: true, user: bookersaved };
   }
 }
