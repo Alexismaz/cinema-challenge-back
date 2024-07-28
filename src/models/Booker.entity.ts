@@ -31,6 +31,6 @@ export class Booker extends BaseEntity {
   @Column({ type: 'varchar', default: '' })
   phone: string;
 
-  @OneToMany(() => Booking, (booking) => booking.booker)
+  @OneToMany(() => Booking, (booking) => booking.booker_id)
   bookings: Booking[];
 }
