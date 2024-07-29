@@ -58,4 +58,14 @@ export class BookerController {
 
     return { ok: true, user: bookersaved };
   }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Trae todos los bookings del usuario' })
+  @ApiBearerAuth()
+  @Get('bookings')
+  async getUserBookings(@GetUser() booker: Booker) {
+    const bookerId = parseInt(`${booker.id}`, 10);
+    const userBookings = await this.bookerService.getBookerById(bookerId);
+    return { ok: true, bookings: userBookings };
+  }
 }

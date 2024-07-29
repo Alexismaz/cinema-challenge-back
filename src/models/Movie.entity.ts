@@ -1,5 +1,6 @@
-import { Index, Column, Entity } from 'typeorm';
+import { Index, Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from './Base.entity';
+import { Booking } from './Booking.entity';
 
 @Entity({ name: 'Movie' })
 export class Movie extends BaseEntity {
@@ -12,4 +13,7 @@ export class Movie extends BaseEntity {
 
   @Column({ type: 'varchar', length: 255, nullable: false })
   director: string;
+
+  @OneToMany(() => Booking, (booking) => booking.movie)
+  bookings: Booking[];
 }

@@ -11,11 +11,21 @@ export class AuditoriumService {
     @InjectRepository(Auditorium)
     private readonly auditoriumRepository: Repository<Auditorium>,
   ) {}
+
   async getAuditoriums() {
     const allAuditoriums = await this.auditoriumRepository.find({
-      relations: ['seats'],
+      relations: ['seats', 'schedules'],
     });
 
     return allAuditoriums;
+  }
+
+  async createAuditorium(auditorium: Auditorium) {
+    const newAuditorium = new Auditorium();
+    newAuditorium.name = auditorium.name;
+    newAuditorium.seat_count = auditorium.seat_count;
+    await this.auditoriumRepository.save(newAuditorium);
+
+    return newAuditorium;
   }
 }
