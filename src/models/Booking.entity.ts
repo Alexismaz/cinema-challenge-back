@@ -10,17 +10,17 @@ export class Booking extends BaseEntity {
   @Column({ type: 'varchar', length: 255, nullable: false })
   name: string;
 
-  @ManyToOne(() => Booker, (booker) => booker.id)
-  booker_id: number;
+  @ManyToOne(() => Booker, (booker) => booker.bookings)
+  booker: Booker;
 
-  @ManyToOne(() => Seat, (seat) => seat.id)
-  seat_id: number;
+  @ManyToOne(() => Schedule, (schedule) => schedule.bookings)
+  schedule: Schedule;
 
-  @ManyToOne(() => Movie, (movie) => movie.id)
-  movie_id: number;
+  @ManyToOne(() => Seat, (seat) => seat.bookings)
+  seat: Seat;
 
-  @ManyToOne(() => Schedule, (schedule) => schedule.id)
-  schedule_id: number;
+  @ManyToOne(() => Movie, (movie) => movie.bookings)
+  movie: Movie;
 
   @Column({ type: 'boolean', default: true })
   disponibility: boolean;

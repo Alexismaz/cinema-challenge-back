@@ -11,6 +11,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BookerModule } from '@modules/booker/booker.module';
 import { AuditoriumModule } from '@modules/auditorium/auditorium.module';
 import { AuthModule } from '@modules/auth/auth.module';
+import { ScheduleModule } from '@modules/schedule/schedule.module';
+import { SeatModule } from '@modules/seat/seat.module';
+import { BookingModule } from '@modules/booking/booking.module';
+import { MovieModule } from '@modules/movie/movier.module';
 
 @Module({
   imports: [
@@ -35,7 +39,11 @@ import { AuthModule } from '@modules/auth/auth.module';
       }),
     }),
     AuditoriumModule,
+    ScheduleModule,
     BookerModule,
+    MovieModule,
+    BookingModule,
+    SeatModule,
     AuthModule,
   ],
   controllers: [AppController],

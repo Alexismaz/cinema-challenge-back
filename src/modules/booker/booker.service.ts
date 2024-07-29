@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Booker, UserRoleType } from '@models/Booker.entity';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
+import { Booking } from '@models/Booking.entity';
 
 @Injectable()
 export class BookerService {
@@ -66,5 +67,17 @@ export class BookerService {
     newBooker.role = booker.role as UserRoleType;
     const savedBooker = await this.bookerRepository.save(newBooker);
     return savedBooker;
+  }
+
+  async getBookerById(bookerId: number): Promise<Booking[]> {
+    const bookingsFound = await this.bookerRepository.findOne({
+      where: {
+        id: bookerId,
+      },
+      relations: ['booking'],
+    });
+    if (!bookingsFound) throw new NotFoundException('[ Booker | Bookings ]: No se econtraron bookings');
+
+    return bookingsFound.bookings;
   }
 }
