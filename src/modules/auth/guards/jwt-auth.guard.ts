@@ -13,7 +13,7 @@ export class JwtAuthGuard implements CanActivate {
         throw new UnauthorizedException('Please provide token');
       }
       const accessToken = authorization.replace(/bearer/gim, '').trim();
-      const { user } = await this.authService.validateAccessToken(accessToken);
+      const user = await this.authService.validateAccessToken(accessToken);
       request.user = user;
       return true;
     } catch (error) {
