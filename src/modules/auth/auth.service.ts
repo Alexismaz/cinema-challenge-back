@@ -12,24 +12,23 @@ export class AuthService {
   userRepository: any;
 
   constructor(
-    private readonly userService: BookerService,
+    private readonly bookerService: BookerService,
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
   ) {}
 
   async logIn(logInDto: LogInDto) {
-    const user = await this.userService.bookerExistByEmail(logInDto.email);
+    const user = await this.bookerService.bookerExistByEmail(logInDto.email);
 
     if (!user) {
       throw new NotFoundException('El usuario no existe.');
     }
 
-    const userPassword = await this.userService.findByEmailWithPassword(logInDto.email);
+    const userPassword = await this.bookerService.findByEmailWithPassword(logInDto.email);
 
     if (!bcrypt.compareSync(logInDto.password, userPassword)) {
       throw new UnauthorizedException('Contraseña no válida.');
     }
-
     const token = await this.generateAccessToken(user.id);
 
     return {
@@ -54,8 +53,8 @@ export class AuthService {
       const data = this.jwtService.verify(accessToken, {
         secret: this.configService.get<string>('session.secretKey'),
       });
-
-      return data;
+      const user = await this.bookerService.findById(data.userId);
+      return user;
     } catch (e) {
       if (e instanceof TokenExpiredError) {
         throw new UnauthorizedException('El token ha caducado');
