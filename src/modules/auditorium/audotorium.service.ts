@@ -24,6 +24,7 @@ export class AuditoriumService {
     const newAuditorium = new Auditorium();
     newAuditorium.name = auditorium.name;
     newAuditorium.seat_count = auditorium.seat_count;
+    newAuditorium.price = auditorium.price;
     await this.auditoriumRepository.save(newAuditorium);
 
     return newAuditorium;
