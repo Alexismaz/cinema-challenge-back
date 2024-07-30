@@ -8,6 +8,9 @@ export class Seat extends BaseEntity {
   @Column({ type: 'int', nullable: false })
   seat_number: number;
 
+  @Column({ type: 'boolean', default: true })
+  disponibility: boolean;
+
   @ManyToOne(() => Auditorium, (auditorium) => auditorium.seats)
   auditorium: Auditorium;
 

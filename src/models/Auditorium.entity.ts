@@ -11,6 +11,9 @@ export class Auditorium extends BaseEntity {
   @Column({ type: 'int', nullable: false, default: 20 })
   seat_count: number;
 
+  @Column({ type: 'int', nullable: false })
+  price: number;
+
   @OneToMany(() => Seat, (seat) => seat.auditorium)
   seats: Seat[];
 

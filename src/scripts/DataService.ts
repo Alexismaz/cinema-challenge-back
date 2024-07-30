@@ -34,9 +34,9 @@ export class DataService {
     this.logger.debug('Creating auditoriums if they do not already exist');
     if (auditoriums.length === 0) {
       const auditoriumsDefault = [
-        { id: 1, name: 'Sala A', seat_count: 20, seats: [], schedules: [] },
-        { id: 2, name: 'Sala B', seat_count: 20, seats: [], schedules: [] },
-        { id: 3, name: 'Sala C', seat_count: 30, seats: [], schedules: [] },
+        { id: 1, name: 'Sala A', seat_count: 20, seats: [], schedules: [], price: 750 },
+        { id: 2, name: 'Sala B', seat_count: 20, seats: [], schedules: [], price: 250 },
+        { id: 3, name: 'Sala C', seat_count: 30, seats: [], schedules: [], price: 500 },
       ];
       for (const auditoriumDefault of auditoriumsDefault) {
         await this.auditoriumService.createAuditorium(auditoriumDefault);
