@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 class DisponibilityProps {
   name: string;
+  auditorium_id: number;
   three: boolean;
   five: boolean;
   seven: boolean;
@@ -41,6 +42,7 @@ export class BookingService {
       const auditoriumBookings = bookings.filter((booking) => booking.schedule.auditorium.id === auditorium.id);
       const auditoriumDisponibility = {
         name: auditorium.name,
+        auditorium_id: auditorium.id,
         three: auditoriumBookings.filter((booking) => booking.schedule.hour === '1500').length < auditorium.seat_count,
         five: auditoriumBookings.filter((booking) => booking.schedule.hour === '1700').length < auditorium.seat_count,
         seven: auditoriumBookings.filter((booking) => booking.schedule.hour === '1900').length < auditorium.seat_count,
