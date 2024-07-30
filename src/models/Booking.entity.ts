@@ -22,9 +22,6 @@ export class Booking extends BaseEntity {
   @ManyToOne(() => Movie, (movie) => movie.bookings)
   movie: Movie;
 
-  @Column({ type: 'boolean', default: true })
-  disponibility: boolean;
-
   @Column({ type: 'varchar', length: 255, default: null, nullable: true })
   reservation_code: string;
 }
