@@ -9,9 +9,10 @@ export class MovieController {
   constructor(private readonly movieService: MovieService) {}
 
   // @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Trae todos los horarios' })
+  @ApiOperation({ summary: 'Trae una pelicula con el id proporcionado' })
   @Get('get-movie/:id')
   async getMovieById(@Param('id') id: number) {
+    console.log('first');
     const result = await this.movieService.getMovieById(id);
     return { ok: true, movie: result };
   }

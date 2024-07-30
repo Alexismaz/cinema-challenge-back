@@ -15,4 +15,13 @@ export class MovieService {
     const movieFounded = await this.movieRepository.findOne({ where: { id: movieId } });
     return movieFounded;
   }
+
+  async createDefault() {
+    const newMovie = new Movie();
+    newMovie.title = 'DeadPool';
+    newMovie.description = 'Muy buena pelicula la recomiendo mucho';
+    newMovie.director = 'Shawn Levy​';
+    await this.movieRepository.save(newMovie);
+    return newMovie;
+  }
 }

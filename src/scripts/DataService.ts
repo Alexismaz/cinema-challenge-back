@@ -4,6 +4,7 @@ import { UserRoleType } from '@models/Booker.entity';
 import { AuditoriumService } from '@modules/auditorium/audotorium.service';
 import { SeatService } from '@modules/seat/seat.service';
 import { ScheduleService } from '@modules/schedule/schedule.service';
+import { MovieService } from '@modules/movie/movie.service';
 
 @Injectable()
 export class DataService {
@@ -13,6 +14,7 @@ export class DataService {
     private readonly auditoriumService: AuditoriumService,
     private readonly seatService: SeatService,
     private readonly schedulesService: ScheduleService,
+    private readonly movieService: MovieService,
   ) {}
 
   async loadDataByDefault(): Promise<void> {
@@ -23,7 +25,11 @@ export class DataService {
         role: UserRoleType.ADMIN,
       },
     ];
-
+    const movie = await this.movieService.getMovieById(1);
+    this.logger.debug('Creating Movie if they do not already exist');
+    if (!movie) {
+      await this.movieService.createDefault();
+    }
     const auditoriums = await this.auditoriumService.getAuditoriums();
     this.logger.debug('Creating auditoriums if they do not already exist');
     if (auditoriums.length === 0) {
